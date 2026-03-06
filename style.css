@@ -1,254 +1,244 @@
 /* S:MIRROR ULTIMATE STYLE SHEET 
-    Theme: Cobalt Blue & Clean White
-    Focus: Student Productivity & Spiritual Growth
+   Theme: Innovative, Futuristic & Clean Modern
+   Primary Colors: Cobalt Blue, Deep Navy, Pearl White
 */
 
 :root {
     --cobalt: #0047AB;
     --royal-blue: #2962FF;
-    --sky-blue: #E3F2FD;
-    --deep-navy: #1A237E;
-    --success-green: #2E7D32;
-    --warning-amber: #FFA000;
-    --danger-red: #D32F2F;
-    --white: #FFFFFF;
-    --gray-light: #F5F7FA;
-    --gray-medium: #BDC3C7;
-    --text-dark: #2C3E50;
-    --shadow-soft: 0 4px 15px rgba(0,0,0,0.08);
-    --shadow-strong: 0 8px 25px rgba(0,0,0,0.15);
+    --navy: #1A237E;
+    --glass: rgba(255, 255, 255, 0.9);
+    --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    --success: #2ECC71;
+    --warning: #F1C40F;
+    --danger: #E74C3C;
+    --text: #2C3E50;
+    --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 }
 
-/* ১. বেসিক সেটআপ */
+/* ১. গ্লোবাল রিসেট ও ফন্ট */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    -webkit-tap-highlight-color: transparent;
+    font-family: 'Hind Siliguri', 'Segoe UI', sans-serif;
 }
 
 body {
-    font-family: 'Hind Siliguri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #CBD5E0; /* বাইরের ব্যাকগ্রাউন্ড */
-    color: var(--text-dark);
-    line-height: 1.6;
+    background: var(--bg-gradient);
+    color: var(--text);
     display: flex;
     justify-content: center;
     min-height: 100vh;
+    overflow-x: hidden;
 }
 
 #app-container {
     width: 100%;
-    max-width: 500px; /* মোবাইল ফ্রেন্ডলি উইডথ */
-    background-color: var(--gray-light);
+    max-width: 550px;
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    box-shadow: var(--shadow);
     position: relative;
-    box-shadow: var(--shadow-strong);
 }
 
-/* ২. মেন্টর নোটিফিকেশন বার (Sticky Header) */
+/* ২. মেন্টর বার (Futuristic Sticky Header) */
 #mentor-bar {
-    background: linear-gradient(135deg, var(--cobalt), var(--deep-navy));
+    background: linear-gradient(90deg, var(--navy), var(--cobalt));
     color: white;
-    padding: 18px 20px;
+    padding: 20px;
     display: flex;
     align-items: center;
     gap: 15px;
     position: sticky;
     top: 0;
     z-index: 1000;
-    border-bottom: 3px solid var(--royal-blue);
+    border-bottom: 4px solid var(--royal-blue);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 #mentor-icon {
-    font-size: 28px;
-    background: rgba(255,255,255,0.2);
-    padding: 5px;
-    border-radius: 50%;
-    animation: pulse 2s infinite;
+    font-size: 32px;
+    animation: float 3s ease-in-out infinite;
 }
 
 #mentor-text {
     font-size: 0.95rem;
     font-weight: 500;
-    letter-spacing: 0.3px;
+    line-height: 1.4;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
 }
 
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-    100% { transform: scale(1); }
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-5px); }
 }
 
-/* ৩. নেভিগেশন ট্যাব ডিজাইন */
+/* ৩. নেভিগেশন ট্যাব (Modern Segmented Control) */
 .nav-tabs {
     display: flex;
-    background: var(--white);
-    padding: 5px;
+    background: #E8EAF6;
     margin: 15px;
-    border-radius: 12px;
-    box-shadow: var(--shadow-soft);
+    padding: 5px;
+    border-radius: 15px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
 }
 
 .nav-tabs button {
     flex: 1;
-    padding: 12px 5px;
+    padding: 12px;
     border: none;
     background: none;
     font-weight: 600;
-    color: var(--gray-medium);
+    color: #7986CB;
     cursor: pointer;
-    transition: 0.3s;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    border-radius: 12px;
 }
 
 .nav-tabs button.active {
-    background-color: var(--cobalt);
-    color: var(--white);
+    background: var(--white);
+    background-color: white;
+    color: var(--cobalt);
+    box-shadow: var(--shadow);
+    transform: scale(1.05);
 }
 
-/* ৪. কার্ড ও সেকশন ডিজাইন */
+/* ৪. কার্ড ডিজাইন (Glass Card Style) */
 .screen {
-    padding: 10px 20px 100px 20px; /* নিচে জায়গা রাখা হয়েছে সেভ বাটনের জন্য */
-    animation: slideUp 0.4s ease-out;
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+    padding: 20px 20px 100px 20px;
 }
 
 .section-card {
-    background: var(--white);
-    border-radius: 15px;
+    background: white;
+    border-radius: 20px;
     padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(0,0,0,0.03);
+    margin-bottom: 25px;
+    border: 1px solid rgba(255,255,255,0.3);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease;
+}
+
+.section-card:hover {
+    transform: translateY(-3px);
 }
 
 .section-card h3 {
-    color: var(--cobalt);
-    font-size: 1.15rem;
+    color: var(--navy);
+    font-size: 1.2rem;
     margin-bottom: 15px;
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 2px solid var(--sky-blue);
-    padding-bottom: 8px;
+    border-bottom: 2px solid #F0F2F5;
+    padding-bottom: 10px;
 }
 
-/* ৫. ইনপুট ও ফর্ম ডিজাইন */
+/* ৫. ইনপুট ও ফর্ম ডিজাইন (Innovative UI) */
 .input-group {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
-.input-group label {
+label {
     display: block;
     font-size: 0.85rem;
     font-weight: 600;
-    margin-bottom: 6px;
-    color: #546E7A;
+    margin-bottom: 8px;
+    color: #5C6BC0;
 }
 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
+input[type="text"], 
+input[type="number"], 
+input[type="date"], 
+input[type="month"], 
+select, 
 textarea {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #E0E7FF;
-    border-radius: 10px;
+    padding: 14px;
+    border: 2px solid #E8EAF6;
+    border-radius: 12px;
+    background: #F9FAFB;
     font-size: 1rem;
-    color: var(--text-dark);
-    background-color: #F9FBFF;
-    transition: all 0.3s;
+    transition: all 0.3s ease;
 }
 
 input:focus, select:focus, textarea:focus {
     border-color: var(--royal-blue);
-    background-color: var(--white);
-    outline: none;
+    background: white;
     box-shadow: 0 0 0 4px rgba(41, 98, 255, 0.1);
+    outline: none;
 }
 
-textarea {
-    resize: none;
-    font-family: inherit;
+/* সালাত চেকবক্স ডিজাইন */
+#salah-container label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #F5F7FA;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    cursor: pointer;
 }
 
-/* ৬. বাটন ডিজাইন */
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--cobalt);
+}
+
+/* ৬. বাটন (Modern Futuristic Button) */
 .primary-btn {
     background: linear-gradient(135deg, var(--royal-blue), var(--cobalt));
     color: white;
     border: none;
-    padding: 16px;
-    border-radius: 12px;
+    padding: 18px;
+    border-radius: 15px;
     font-size: 1.1rem;
     font-weight: 700;
     width: 100%;
     cursor: pointer;
-    box-shadow: 0 6px 20px rgba(0, 71, 171, 0.25);
-    transition: 0.3s;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+    box-shadow: 0 10px 20px rgba(0, 71, 171, 0.3);
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.primary-btn:hover {
+    filter: brightness(1.1);
+    box-shadow: 0 15px 25px rgba(0, 71, 171, 0.4);
 }
 
 .primary-btn:active {
-    transform: scale(0.96);
+    transform: scale(0.97);
 }
 
-.primary-btn:disabled {
-    background: var(--gray-medium);
-    cursor: not-allowed;
-    box-shadow: none;
+/* ৭. মেন্টর মূল্যায়ন বক্স */
+.mentor-box {
+    background: #E8F5E9;
+    border-left: 5px solid var(--success);
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    color: #1B5E20;
+    line-height: 1.5;
 }
 
-/* ৭. স্পেশাল এলিমেন্ট (Monthly Stats) */
-#monthly-stats p {
-    background: var(--sky-blue);
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-weight: 600;
-    display: flex;
-    justify-content: space-between;
-}
-
-#stat-salah, #stat-study {
-    color: var(--cobalt);
-    font-size: 1.1rem;
-}
-
-/* ৮. ইউটিলিটি ক্লাস */
+/* ৮. এনিমেশন */
 .hidden {
     display: none !important;
 }
 
-.bn { font-family: 'Hind Siliguri', sans-serif; }
+.center { text-align: center; }
 
-/* ৯. রেসপনসিভনেস (ছোট ফোনের জন্য) */
-@media (max-width: 360px) {
-    #mentor-text { font-size: 0.85rem; }
+/* মোবাইল অপ্টিমাইজেশন */
+@media (max-width: 480px) {
+    .screen { padding: 15px 15px 100px 15px; }
     .section-card { padding: 15px; }
-}
-
-/* ১০. সাকসেস মেসেজ স্টাইল */
-.success-toast {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--success-green);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 30px;
-    box-shadow: var(--shadow-strong);
-    z-index: 2000;
+    #mentor-text { font-size: 0.85rem; }
 }

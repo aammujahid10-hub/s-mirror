@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S:MIRROR | Success & Soul Mentor</title>
+    <title>S:MIRROR Ultimate | Your Life Mentor</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
 </head>
@@ -12,141 +12,117 @@
     <div id="app-container">
         <div id="mentor-bar">
             <div id="mentor-icon">🎙️</div>
-            <div id="mentor-text">আসসালামু আলাইকুম! আমি আপনার S:MIRROR মেন্টর। আপনার প্রোফাইল সেটআপ করুন।</div>
+            <div id="mentor-text">আসসালামু আলাইকুম! আপনার লক্ষ্য অর্জনে আমি পাশে আছি।</div>
         </div>
 
         <div id="setup-screen" class="screen">
-            <h2 style="text-align: center; color: var(--cobalt); margin-bottom: 20px;">স্বাগতম শিক্ষার্থী!</h2>
+            <h2 class="center">প্রোফাইল সেটআপ</h2>
             <div class="section-card">
-                <div class="input-group">
-                    <label>আপনার নাম (Name):</label>
-                    <input type="text" id="user-name" placeholder="আপনার নাম লিখুন">
-                </div>
-                <div class="input-group">
-                    <label>পছন্দের ভাষা (Language):</label>
-                    <select id="lang-select">
-                        <option value="bn">বাংলা (Bengali)</option>
-                        <option value="en">English</option>
-                    </select>
-                </div>
-                <div class="input-group">
-                    <label>লিঙ্গ (Gender):</label>
-                    <select id="user-gender">
-                        <option value="male">ছাত্র (Male)</option>
-                        <option value="female">ছাত্রী (Female)</option>
-                    </select>
-                </div>
+                <input type="text" id="user-name" placeholder="আপনার নাম লিখুন">
+                <select id="user-lang">
+                    <option value="bn">বাংলা (Bengali)</option>
+                    <option value="en">English</option>
+                </select>
+                <select id="user-gender">
+                    <option value="male">ছাত্র (Male)</option>
+                    <option value="female">ছাত্রী (Female)</option>
+                </select>
                 <button class="primary-btn" onclick="startApp()">যাত্রা শুরু করুন</button>
             </div>
         </div>
 
         <div id="main-dashboard" class="screen hidden">
-            
             <div class="nav-tabs">
-                <button id="tab-btn-daily" class="active" onclick="switchTab('daily')">দৈনিক</button>
-                <button id="tab-btn-monthly" onclick="switchTab('monthly')">মাসিক</button>
-                <button id="tab-btn-yearly" onclick="switchTab('yearly')">বাৎসরিক</button>
+                <button id="btn-daily" class="active" onclick="switchTab('daily')">দৈনিক আয়না</button>
+                <button id="btn-monthly" onclick="switchTab('monthly')">মাসিক পরিকল্পনা</button>
+                <button id="btn-yearly" onclick="switchTab('yearly')">বাৎসরিক মিশন</button>
             </div>
 
             <section id="tab-daily" class="tab-content">
                 <div class="section-card">
-                    <label>তারিখ নির্বাচন করুন:</label>
-                    <input type="date" id="date-picker" onchange="checkDateLimit()">
+                    <label>তারিখ নির্বাচন:</label>
+                    <input type="date" id="date-picker" onchange="loadDailyReport()">
                 </div>
 
                 <div class="section-card">
-                    <h3>🕌 ইবাদত (Ibadah)</h3>
+                    <h3>🕌 ইবাদত ও সালাত</h3>
+                    <div id="salah-container">
+                        </div>
+                    <hr>
                     <div class="input-group">
-                        <label>৫ ওয়াক্ত সালাত (সংখ্যা):</label>
-                        <input type="number" id="daily-salah" min="0" max="5" placeholder="0-5">
+                        <label>কুরআন তিলাওয়াত (আয়াত):</label>
+                        <input type="number" id="d-quran" placeholder="আজ কত আয়াত পড়লেন?">
                     </div>
                     <div class="input-group">
-                        <label>কুরআন তিলাওয়াত (আয়াত/পৃষ্ঠা):</label>
-                        <input type="number" id="daily-quran" placeholder="কত টুকু পড়লেন?">
-                    </div>
-                    <div class="input-group">
-                        <label>মাছনুন দোয়া ও জিকির:</label>
-                        <select id="daily-dua">
-                            <option value="0">পড়া হয়নি</option>
-                            <option value="1">অল্প</option>
-                            <option value="2">নিয়মিত</option>
-                        </select>
+                        <label>হাদিস পাঠ ও শিক্ষা (মিনিট):</label>
+                        <input type="number" id="d-hadith" placeholder="আজকের হাদিস শিক্ষা">
                     </div>
                 </div>
 
                 <div class="section-card">
-                    <h3>📚 জ্ঞানার্জন (Knowledge)</h3>
-                    <div class="input-group">
-                        <label>একাডেমিক পড়াশোনা (ঘণ্টা):</label>
-                        <input type="number" id="daily-study" placeholder="কত ঘণ্টা?">
-                    </div>
-                    <div class="input-group">
-                        <label>দ্বীনি কিতাব/সাহিত্য (পৃষ্ঠা):</label>
-                        <input type="number" id="daily-books" placeholder="কত পৃষ্ঠা?">
-                    </div>
-                    <div class="input-group">
-                        <label>পত্রিকা/ম্যাগাজিন পাঠ:</label>
-                        <select id="daily-news">
-                            <option value="no">না</option>
-                            <option value="yes">হ্যাঁ</option>
-                        </select>
-                    </div>
+                    <h3>📚 জ্ঞানার্জন ও সময়</h3>
+                    <input type="number" id="d-study" placeholder="একাডেমিক পড়াশোনা (ঘণ্টা)">
+                    <input type="number" id="d-exercise" placeholder="ব্যায়াম/খেলাধুলা (মিনিট)">
+                    <input type="number" id="d-social" placeholder="সোশ্যাল মিডিয়া/অপচয় (মিনিট)">
+                    <label><input type="checkbox" id="d-news"> পত্রিকা/ম্যাগাজিন পাঠ</label>
                 </div>
 
                 <div class="section-card">
-                    <h3>🌟 চরিত্র ও সামাজিক আমল</h3>
-                    <div class="input-group">
-                        <label>পিতামাতার সেবা/যোগাযোগ:</label>
-                        <select id="daily-parents">
-                            <option value="0">হয়নি</option>
-                            <option value="1">হয়েছে</option>
-                        </select>
-                    </div>
-                    <div class="input-group">
-                        <label>পরচর্চা/মিথ্যা থেকে বেঁচে থাকা:</label>
-                        <select id="daily-character">
-                            <option value="yes">আলহামদুলিল্লাহ বেঁচে ছিলাম</option>
-                            <option value="no">ব্যর্থ হয়েছি</option>
-                        </select>
-                    </div>
+                    <h3>📞 যোগাযোগ ও সম্পর্ক</h3>
+                    <input type="number" id="d-relatives" placeholder="আত্মীয়-স্বজন যোগাযোগ (জন)">
+                    <input type="number" id="d-friends" placeholder="বন্ধু/শুভাকাঙ্ক্ষী (জন)">
+                    <input type="number" id="d-new-people" placeholder="নতুন পরিচিত মানুষ (জন)">
                 </div>
 
                 <div class="section-card">
-                    <h3>📝 আত্ম-সমালোচনা (Self-Critique)</h3>
-                    <textarea id="daily-notes" rows="4" placeholder="আজকের বিশেষ ভুল বা কালকের জন্য পরিকল্পনা..."></textarea>
+                    <h3>✅ দায়িত্ব ও কর্ম</h3>
+                    <label><input type="checkbox" id="d-house-task"> পারিবারিক দায়িত্ব পালন</label>
+                    <input type="number" id="d-good-work" placeholder="ভালো কাজের সময় (ঘণ্টা)">
+                    <textarea id="d-critique" placeholder="আজকের আত্ম-সমালোচনা ও ভুলসমূহ..."></textarea>
                 </div>
 
-                <button id="save-btn" class="primary-btn" onclick="saveDailyData()">রিফ্লেকশন সেভ করুন</button>
-            </section>
-
-            <section id="tab-yearly" class="tab-content hidden">
-                <div class="section-card">
-                    <h3>🏆 এই বছরের মিশন</h3>
-                    <div class="input-group">
-                        <label>পড়াশোনার টার্গেট (Result/GPA):</label>
-                        <input type="text" id="year-target" placeholder="যেমন: GPA 5 বা ১টি নতুন স্কিল">
-                    </div>
-                    <div class="input-group">
-                        <label>হিফজ/কুরআন লক্ষ্য:</label>
-                        <input type="text" id="year-quran-goal" placeholder="কতটুকু শেষ করতে চান?">
-                    </div>
-                    <button class="primary-btn" onclick="saveYearlyGoals()">বাৎসরিক টার্গেট সেট করুন</button>
-                </div>
+                <button class="primary-btn" onclick="saveDailyReport()">আজকের ডাটা সেভ করুন</button>
             </section>
 
             <section id="tab-monthly" class="tab-content hidden">
                 <div class="section-card">
-                    <h3>📊 মাসিক ফলাফল ও মেন্টর গাইডেন্স</h3>
-                    <div id="monthly-stats">
-                        <p>মাসিক গড় সালাত: <span id="stat-salah">০</span></p>
-                        <p>মোট পড়াশোনা: <span id="stat-study">০</span> ঘণ্টা</p>
+                    <h2 id="monthly-header">মাসিক পরিকল্পনা</h2>
+                    <div class="input-group">
+                        <label>মাসের নাম ও সাল:</label>
+                        <input type="month" id="m-period">
                     </div>
-                    <div id="mentor-suggestion" style="background: var(--mentor-msg); padding: 10px; border-radius: 8px; margin-top: 10px;">
-                        <strong>মেন্টর পরামর্শ:</strong> আপনার মাসের শেষে এখানে একটি ফর্মাল গাইডেন্স রিপোর্ট তৈরি হবে।
-                    </div>
+                    
+                    <h3>📖 কুরআন ও হাদিস টার্গেট</h3>
+                    <input type="text" id="m-quran-surahs" placeholder="পঠিতব্য সূরার তালিকা">
+                    <input type="number" id="m-quran-ayat-target" placeholder="গড় আয়াত লক্ষ্য (দৈনিক)">
+                    <input type="text" id="m-hadith-goal" placeholder="হাদিস গ্রন্থ ও মুখস্ত বিষয়">
+                    
+                    <h3>💼 শিক্ষা ও যোগাযোগ বৃদ্ধি</h3>
+                    <input type="text" id="m-books" placeholder="পঠিতব্য বইয়ের নাম">
+                    <input type="number" id="m-new-friend-target" placeholder="নতুন বন্ধু বৃদ্ধির লক্ষ্য (জন)">
+                    <input type="number" id="m-vip-comm" placeholder="ভিআইপি যোগাযোগ লক্ষ্য (জন)">
+                    
+                    <button class="primary-btn" onclick="saveMonthlyPlan()">মাসিক পরিকল্পনা লক করুন</button>
+                </div>
+
+                <div id="monthly-recap" class="section-card hidden">
+                    <h3>📊 এক নজরে মাসিক রিপোর্ট</h3>
+                    <div id="recap-stats"></div>
+                    <div id="mentor-eval" class="mentor-box"></div>
                 </div>
             </section>
 
+            <section id="tab-yearly" class="tab-content hidden">
+                <div class="section-card">
+                    <h3>🏆 বাৎসরিক পরিকল্পনা</h3>
+                    <textarea id="y-goals" rows="10" placeholder="বছরের শুরুতে আপনার বড় লক্ষ্যগুলো এখানে বিস্তারিত লিখুন (কুরআন, পড়াশোনা, ক্যারিয়ার, চরিত্র)..."></textarea>
+                    <button class="primary-btn" onclick="saveYearlyPlan()">বাৎসরিক মিশন সেভ করুন</button>
+                </div>
+                <div id="yearly-review" class="section-card hidden">
+                    <h3>🔍 বাৎসরিক পর্যালোচনা</h3>
+                    <div id="yearly-summary"></div>
+                </div>
+            </section>
         </div>
     </div>
 

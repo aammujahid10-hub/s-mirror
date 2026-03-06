@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S:MIRROR | Advanced Reflective App</title>
+    <style>
+        :root {
+            --cobalt: #0047AB;
+            --sky: #E1F5FE;
+            --gold: #FFD700;
+            --deep: #002366;
+            --white: #FFFFFF;
+        }
+
+        body { 
+            font-family: 'Segoe UI', sans-serif; 
+            background: #eef2f7; 
+            margin: 0; 
+            padding: 10px; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-container {
+            background: var(--white);
+            width: 100%;
+            max-width: 900px;
+            border: 4px solid var(--cobalt);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Branding */
+        .brand-header { text-align: center; border-bottom: 2px solid var(--cobalt); margin-bottom: 20px; }
+        .logo { font-size: 35px; font-weight: 900; color: var(--cobalt); letter-spacing: 2px; }
+        
+        /* Dashboard Control */
+        .nav-dashboard {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            background: var(--sky);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .status-badge {
+            grid-column: span 2;
+            text-align: center;
+            font-weight: bold;
+            color: var(--deep);
+            font-size: 14px;
+        }
+
+        /* Inputs */
+        .tracker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+        }
+
+        .input-card {
+            background: #fdfdfd;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .input-card:focus-within { border-color: var(--cobalt); box-shadow: 0 0 8px var(--sky); }
+
+        label { display: block; font-size: 11px; font-weight: bold; color: var(--cobalt); margin-bottom: 5px; text-transform: uppercase; }
+        input, textarea { width: 100%; border: none; font-size: 16px; color: var(--deep); background: transparent; outline: none; }
+
+        /* Buttons */
+        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
+        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
+        .btn-save { background: var(--cobalt); color: white; }
+        .btn-special { background: #f06292; color: white; }
+        .btn-export { background: #455a64; color: white; font-size: 12px; }
+
+        /* Anniversary/Reward Animation */
+        @keyframes shine { from { background: white; } to { background: #fffde7; } }
+        .goal-met { animation: shine 1s infinite alternate; border: 2px solid var(--gold); }
+    </style>
+</head>
+<body>
+
+<div class="app-container" id="mirror-app">
+    <div class="brand-header">
+        <div class="logo">S:MIRROR</div>
+        <p style="font-size: 12px; margin: 5px;"><i>Today is the first day of the rest of your life. Make it count.</i></p>
+    </div>
+
+    <div class="nav-dashboard">
+        <div class="status-badge" id="quote-area">
+            "Your 24 hours are a trust from Allah."
+        </div>
+        <div>
+            <label>Select Date</label>
+            <input type="date" id="dateSelector" onchange="syncData()">
+        </div>
+        <div style="text-align: right;">
+            <label>Daily Streak</label>
+            <span id="streakCount" style="font-size: 20px; font-weight: bold;">🔥 0</span>
+        </div>
+    </div>
+
+    <div class="tracker-grid">
+        <div class="input-card">
+            <label>Al-Quran (Verses)</label>
+            <input type="text" id="quran" placeholder="0">
+        </div>
+        <div class="input-card">
+            <label>Al-Hadith</label>
+            <input type="text" id="hadith" placeholder="0">
+        </div>
+        <div class="input-card">
+            <label>Salah (Jama'at)</label>
+            <input type="number" id="salah" max="5" placeholder="0">
+        </div>
+        <div class="input-card">
+            <label>Academic Study</label>
+            <input type="number" id="study" placeholder="Hrs">
+        </div>
+        <div class="input-card">
+            <label>Islamic Books</label>
+            <input type="text" id="ibook" placeholder="Pages">
+        </div>
+        <div class="input-card">
+            <label>Social Media</label>
+            <input type="number" id="social" placeholder="Mins">
+        </div>
+        <div class="input-card" style="grid-column: span 2;">
+            <label>Self-Critique & Daily Notes</label>
+            <textarea id="notes" rows="2" placeholder="How was your soul today?"></textarea>
+        </div>
+    </div>
+
+    <div class="btn-group">
+        <button class="btn btn-save" onclick="handleSave()">SAVE REFLECTION</button>
+        <button class="btn btn-special" onclick="toggleFemaleMode()">TOGGLE SPECIAL MODE (FEMALE)</button>
+        <button class="btn btn-export" onclick="exportHistory()">DOWNLOAD ALL DATA (BACKUP)</button>
+    </div>
+
+    <div style="margin-top: 20px; font-size: 10px; color: #777; text-align: center;">
+        S: Soul | Steadfastness | Success | Self-Accounting | Scholarship | Sincerity
+    </div>
+</div>
+
+<script>
+    // Initial Setup
+    const dateInput = document.getElementById('dateSelector');
+    dateInput.valueAsDate = new Date();
+    
+    function handleSave() {
+        const date = dateInput.value;
+        const entry = {
+            quran: document.getElementById('quran').value,
+            hadith: document.getElementById('hadith').value,
+            salah: document.getElementById('salah').value,
+            study: document.getElementById('study').value,
+            ibook: document.getElementById('ibook').value,
+            social: document.getElementById('social').value,
+            notes: document.getElementById('notes').value,
+            isSpecial: document.getElementById('mirror-app').style.borderColor === 'rgb(240, 98, 146)'
+        };
+
+        localStorage.setItem('SMIRROR_' + date, JSON.stringify(entry));
+
+        // Intelligence: Celebration Logic
+        if(entry.salah >= 5 || entry.study >= 5) {
+            alert("MASHALLAH! You reached your goal today. Keep it up!");
+            document.getElementById('mirror-app').classList.add('goal-met');
+        } else {
+            alert("Mirror Updated. Tomorrow is another chance to shine.");
+        }
+        updateStreak();
+    }
+
+    function syncData() {
+        const date = dateInput.value;
+        const rawData = localStorage.getItem('SMIRROR_' + date);
+        const app = document.getElementById('mirror-app');
+        
+        if (rawData) {
+            const data = JSON.parse(rawData);
+            document.getElementById('quran').value = data.quran;
+            document.getElementById('hadith').value = data.hadith;
+            document.getElementById('salah').value = data.salah;
+            document.getElementById('study').value = data.study;
+            document.getElementById('ibook').value = data.ibook;
+            document.getElementById('social').value = data.social;
+            document.getElementById('notes').value = data.notes;
+            if(data.isSpecial) applyFemaleMode(true); else applyFemaleMode(false);
+        } else {
+            // Reset fields if no data
+            ['quran', 'hadith', 'salah', 'study', 'ibook', 'social', 'notes'].forEach(id => document.getElementById(id).value = "");
+            applyFemaleMode(false);
+        }
+    }
+
+    function applyFemaleMode(active) {
+        const app = document.getElementById('mirror-app');
+        if(active) {
+            app.style.borderColor = "#f06292";
+            app.style.background = "#fff5f8";
+        } else {
+            app.style.borderColor = "#0047AB";
+            app.style.background = "white";
+        }
+    }
+
+    function toggleFemaleMode() {
+        const isCurrentPink = document.getElementById('mirror-app').style.borderColor === 'rgb(240, 98, 146)';
+        applyFemaleMode(!isCurrentPink);
+    }
+
+    function exportHistory() {
+        let history = "";
+        for (let i = 0; i < localStorage.length; i++) {
+            let key = localStorage.key(i);
+            if (key.startsWith("SMIRROR_")) {
+                history += key + ": " + localStorage.getItem(key) + "\n\n";
+            }
+        }
+        const blob = new Blob([history], { type: "text/plain" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "SMIRROR_History_Backup.txt";
+        a.click();
+    }
+
+    function updateStreak() {
+        // Logic to count how many keys exist in localStorage
+        let count = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+            if (localStorage.key(i).startsWith("SMIRROR_")) count++;
+        }
+        document.getElementById('streakCount').innerText = "🔥 " + count;
+    }
+
+    // Auto-load today's data
+    syncData();
+    updateStreak();
+</script>
+
+</body>
+          </html>

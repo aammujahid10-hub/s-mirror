@@ -1,253 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S:MIRROR | Advanced Reflective App</title>
-    <style>
-        :root {
-            --cobalt: #0047AB;
-            --sky: #E1F5FE;
-            --gold: #FFD700;
-            --deep: #002366;
-            --white: #FFFFFF;
-        }
-
-        body { 
-            font-family: 'Segoe UI', sans-serif; 
-            background: #eef2f7; 
-            margin: 0; 
-            padding: 10px; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .app-container {
-            background: var(--white);
-            width: 100%;
-            max-width: 900px;
-            border: 4px solid var(--cobalt);
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-        }
-
-        /* Branding */
-        .brand-header { text-align: center; border-bottom: 2px solid var(--cobalt); margin-bottom: 20px; }
-        .logo { font-size: 35px; font-weight: 900; color: var(--cobalt); letter-spacing: 2px; }
-        
-        /* Dashboard Control */
-        .nav-dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            background: var(--sky);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-        }
-
-        .status-badge {
-            grid-column: span 2;
-            text-align: center;
-            font-weight: bold;
-            color: var(--deep);
-            font-size: 14px;
-        }
-
-        /* Inputs */
-        .tracker-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
-        }
-
-        .input-card {
-            background: #fdfdfd;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 8px;
-            transition: 0.3s;
-        }
-
-        .input-card:focus-within { border-color: var(--cobalt); box-shadow: 0 0 8px var(--sky); }
-
-        label { display: block; font-size: 11px; font-weight: bold; color: var(--cobalt); margin-bottom: 5px; text-transform: uppercase; }
-        input, textarea { width: 100%; border: none; font-size: 16px; color: var(--deep); background: transparent; outline: none; }
-
-        /* Buttons */
-        .btn-group { display: flex; flex-direction: column; gap: 10px; margin-top: 25px; }
-        .btn { padding: 15px; border: none; border-radius: 10px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.2s; }
-        .btn-save { background: var(--cobalt); color: white; }
-        .btn-special { background: #f06292; color: white; }
-        .btn-export { background: #455a64; color: white; font-size: 12px; }
-
-        /* Anniversary/Reward Animation */
-        @keyframes shine { from { background: white; } to { background: #fffde7; } }
-        .goal-met { animation: shine 1s infinite alternate; border: 2px solid var(--gold); }
-    </style>
+    <title>S:MIRROR | Success & Soul Mentor</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="app-container" id="mirror-app">
-    <div class="brand-header">
-        <div class="logo">S:MIRROR</div>
-        <p style="font-size: 12px; margin: 5px;"><i>Today is the first day of the rest of your life. Make it count.</i></p>
+    <div id="app-container">
+        <div id="mentor-bar">
+            <div id="mentor-icon">🎙️</div>
+            <div id="mentor-text">আসসালামু আলাইকুম! আমি আপনার S:MIRROR মেন্টর। আপনার প্রোফাইল সেটআপ করুন।</div>
+        </div>
+
+        <div id="setup-screen" class="screen">
+            <h2 style="text-align: center; color: var(--cobalt); margin-bottom: 20px;">স্বাগতম শিক্ষার্থী!</h2>
+            <div class="section-card">
+                <div class="input-group">
+                    <label>আপনার নাম (Name):</label>
+                    <input type="text" id="user-name" placeholder="আপনার নাম লিখুন">
+                </div>
+                <div class="input-group">
+                    <label>পছন্দের ভাষা (Language):</label>
+                    <select id="lang-select">
+                        <option value="bn">বাংলা (Bengali)</option>
+                        <option value="en">English</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>লিঙ্গ (Gender):</label>
+                    <select id="user-gender">
+                        <option value="male">ছাত্র (Male)</option>
+                        <option value="female">ছাত্রী (Female)</option>
+                    </select>
+                </div>
+                <button class="primary-btn" onclick="startApp()">যাত্রা শুরু করুন</button>
+            </div>
+        </div>
+
+        <div id="main-dashboard" class="screen hidden">
+            
+            <div class="nav-tabs">
+                <button id="tab-btn-daily" class="active" onclick="switchTab('daily')">দৈনিক</button>
+                <button id="tab-btn-monthly" onclick="switchTab('monthly')">মাসিক</button>
+                <button id="tab-btn-yearly" onclick="switchTab('yearly')">বাৎসরিক</button>
+            </div>
+
+            <section id="tab-daily" class="tab-content">
+                <div class="section-card">
+                    <label>তারিখ নির্বাচন করুন:</label>
+                    <input type="date" id="date-picker" onchange="checkDateLimit()">
+                </div>
+
+                <div class="section-card">
+                    <h3>🕌 ইবাদত (Ibadah)</h3>
+                    <div class="input-group">
+                        <label>৫ ওয়াক্ত সালাত (সংখ্যা):</label>
+                        <input type="number" id="daily-salah" min="0" max="5" placeholder="0-5">
+                    </div>
+                    <div class="input-group">
+                        <label>কুরআন তিলাওয়াত (আয়াত/পৃষ্ঠা):</label>
+                        <input type="number" id="daily-quran" placeholder="কত টুকু পড়লেন?">
+                    </div>
+                    <div class="input-group">
+                        <label>মাছনুন দোয়া ও জিকির:</label>
+                        <select id="daily-dua">
+                            <option value="0">পড়া হয়নি</option>
+                            <option value="1">অল্প</option>
+                            <option value="2">নিয়মিত</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>📚 জ্ঞানার্জন (Knowledge)</h3>
+                    <div class="input-group">
+                        <label>একাডেমিক পড়াশোনা (ঘণ্টা):</label>
+                        <input type="number" id="daily-study" placeholder="কত ঘণ্টা?">
+                    </div>
+                    <div class="input-group">
+                        <label>দ্বীনি কিতাব/সাহিত্য (পৃষ্ঠা):</label>
+                        <input type="number" id="daily-books" placeholder="কত পৃষ্ঠা?">
+                    </div>
+                    <div class="input-group">
+                        <label>পত্রিকা/ম্যাগাজিন পাঠ:</label>
+                        <select id="daily-news">
+                            <option value="no">না</option>
+                            <option value="yes">হ্যাঁ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>🌟 চরিত্র ও সামাজিক আমল</h3>
+                    <div class="input-group">
+                        <label>পিতামাতার সেবা/যোগাযোগ:</label>
+                        <select id="daily-parents">
+                            <option value="0">হয়নি</option>
+                            <option value="1">হয়েছে</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label>পরচর্চা/মিথ্যা থেকে বেঁচে থাকা:</label>
+                        <select id="daily-character">
+                            <option value="yes">আলহামদুলিল্লাহ বেঁচে ছিলাম</option>
+                            <option value="no">ব্যর্থ হয়েছি</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-card">
+                    <h3>📝 আত্ম-সমালোচনা (Self-Critique)</h3>
+                    <textarea id="daily-notes" rows="4" placeholder="আজকের বিশেষ ভুল বা কালকের জন্য পরিকল্পনা..."></textarea>
+                </div>
+
+                <button id="save-btn" class="primary-btn" onclick="saveDailyData()">রিফ্লেকশন সেভ করুন</button>
+            </section>
+
+            <section id="tab-yearly" class="tab-content hidden">
+                <div class="section-card">
+                    <h3>🏆 এই বছরের মিশন</h3>
+                    <div class="input-group">
+                        <label>পড়াশোনার টার্গেট (Result/GPA):</label>
+                        <input type="text" id="year-target" placeholder="যেমন: GPA 5 বা ১টি নতুন স্কিল">
+                    </div>
+                    <div class="input-group">
+                        <label>হিফজ/কুরআন লক্ষ্য:</label>
+                        <input type="text" id="year-quran-goal" placeholder="কতটুকু শেষ করতে চান?">
+                    </div>
+                    <button class="primary-btn" onclick="saveYearlyGoals()">বাৎসরিক টার্গেট সেট করুন</button>
+                </div>
+            </section>
+
+            <section id="tab-monthly" class="tab-content hidden">
+                <div class="section-card">
+                    <h3>📊 মাসিক ফলাফল ও মেন্টর গাইডেন্স</h3>
+                    <div id="monthly-stats">
+                        <p>মাসিক গড় সালাত: <span id="stat-salah">০</span></p>
+                        <p>মোট পড়াশোনা: <span id="stat-study">০</span> ঘণ্টা</p>
+                    </div>
+                    <div id="mentor-suggestion" style="background: var(--mentor-msg); padding: 10px; border-radius: 8px; margin-top: 10px;">
+                        <strong>মেন্টর পরামর্শ:</strong> আপনার মাসের শেষে এখানে একটি ফর্মাল গাইডেন্স রিপোর্ট তৈরি হবে।
+                    </div>
+                </div>
+            </section>
+
+        </div>
     </div>
 
-    <div class="nav-dashboard">
-        <div class="status-badge" id="quote-area">
-            "Your 24 hours are a trust from Allah."
-        </div>
-        <div>
-            <label>Select Date</label>
-            <input type="date" id="dateSelector" onchange="syncData()">
-        </div>
-        <div style="text-align: right;">
-            <label>Daily Streak</label>
-            <span id="streakCount" style="font-size: 20px; font-weight: bold;">🔥 0</span>
-        </div>
-    </div>
-
-    <div class="tracker-grid">
-        <div class="input-card">
-            <label>Al-Quran (Verses)</label>
-            <input type="text" id="quran" placeholder="0">
-        </div>
-        <div class="input-card">
-            <label>Al-Hadith</label>
-            <input type="text" id="hadith" placeholder="0">
-        </div>
-        <div class="input-card">
-            <label>Salah (Jama'at)</label>
-            <input type="number" id="salah" max="5" placeholder="0">
-        </div>
-        <div class="input-card">
-            <label>Academic Study</label>
-            <input type="number" id="study" placeholder="Hrs">
-        </div>
-        <div class="input-card">
-            <label>Islamic Books</label>
-            <input type="text" id="ibook" placeholder="Pages">
-        </div>
-        <div class="input-card">
-            <label>Social Media</label>
-            <input type="number" id="social" placeholder="Mins">
-        </div>
-        <div class="input-card" style="grid-column: span 2;">
-            <label>Self-Critique & Daily Notes</label>
-            <textarea id="notes" rows="2" placeholder="How was your soul today?"></textarea>
-        </div>
-    </div>
-
-    <div class="btn-group">
-        <button class="btn btn-save" onclick="handleSave()">SAVE REFLECTION</button>
-        <button class="btn btn-special" onclick="toggleFemaleMode()">TOGGLE SPECIAL MODE (FEMALE)</button>
-        <button class="btn btn-export" onclick="exportHistory()">DOWNLOAD ALL DATA (BACKUP)</button>
-    </div>
-
-    <div style="margin-top: 20px; font-size: 10px; color: #777; text-align: center;">
-        S: Soul | Steadfastness | Success | Self-Accounting | Scholarship | Sincerity
-    </div>
-</div>
-
-<script>
-    // Initial Setup
-    const dateInput = document.getElementById('dateSelector');
-    dateInput.valueAsDate = new Date();
-    
-    function handleSave() {
-        const date = dateInput.value;
-        const entry = {
-            quran: document.getElementById('quran').value,
-            hadith: document.getElementById('hadith').value,
-            salah: document.getElementById('salah').value,
-            study: document.getElementById('study').value,
-            ibook: document.getElementById('ibook').value,
-            social: document.getElementById('social').value,
-            notes: document.getElementById('notes').value,
-            isSpecial: document.getElementById('mirror-app').style.borderColor === 'rgb(240, 98, 146)'
-        };
-
-        localStorage.setItem('SMIRROR_' + date, JSON.stringify(entry));
-
-        // Intelligence: Celebration Logic
-        if(entry.salah >= 5 || entry.study >= 5) {
-            alert("MASHALLAH! You reached your goal today. Keep it up!");
-            document.getElementById('mirror-app').classList.add('goal-met');
-        } else {
-            alert("Mirror Updated. Tomorrow is another chance to shine.");
-        }
-        updateStreak();
-    }
-
-    function syncData() {
-        const date = dateInput.value;
-        const rawData = localStorage.getItem('SMIRROR_' + date);
-        const app = document.getElementById('mirror-app');
-        
-        if (rawData) {
-            const data = JSON.parse(rawData);
-            document.getElementById('quran').value = data.quran;
-            document.getElementById('hadith').value = data.hadith;
-            document.getElementById('salah').value = data.salah;
-            document.getElementById('study').value = data.study;
-            document.getElementById('ibook').value = data.ibook;
-            document.getElementById('social').value = data.social;
-            document.getElementById('notes').value = data.notes;
-            if(data.isSpecial) applyFemaleMode(true); else applyFemaleMode(false);
-        } else {
-            // Reset fields if no data
-            ['quran', 'hadith', 'salah', 'study', 'ibook', 'social', 'notes'].forEach(id => document.getElementById(id).value = "");
-            applyFemaleMode(false);
-        }
-    }
-
-    function applyFemaleMode(active) {
-        const app = document.getElementById('mirror-app');
-        if(active) {
-            app.style.borderColor = "#f06292";
-            app.style.background = "#fff5f8";
-        } else {
-            app.style.borderColor = "#0047AB";
-            app.style.background = "white";
-        }
-    }
-
-    function toggleFemaleMode() {
-        const isCurrentPink = document.getElementById('mirror-app').style.borderColor === 'rgb(240, 98, 146)';
-        applyFemaleMode(!isCurrentPink);
-    }
-
-    function exportHistory() {
-        let history = "";
-        for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            if (key.startsWith("SMIRROR_")) {
-                history += key + ": " + localStorage.getItem(key) + "\n\n";
-            }
-        }
-        const blob = new Blob([history], { type: "text/plain" });
-        const a = document.createElement("a");
-        a.href = URL.createObjectURL(blob);
-        a.download = "SMIRROR_History_Backup.txt";
-        a.click();
-    }
-
-    function updateStreak() {
-        // Logic to count how many keys exist in localStorage
-        let count = 0;
-        for (let i = 0; i < localStorage.length; i++) {
-            if (localStorage.key(i).startsWith("SMIRROR_")) count++;
-        }
-        document.getElementById('streakCount').innerText = "🔥 " + count;
-    }
-
-    // Auto-load today's data
-    syncData();
-    updateStreak();
-</script>
-
+    <script src="app.js"></script>
 </body>
-          </html>
+</html>
